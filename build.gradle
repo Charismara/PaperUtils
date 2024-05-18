@@ -1,0 +1,19 @@
+plugins {
+    id 'com.gradle.plugin-publish' version '1.2.1'
+    id 'java-gradle-plugin'
+}
+
+group = "de.blutmondgilde"
+version = "0.0.1"
+
+gradlePlugin {
+    plugins {
+        paperUtils {
+            id = "de.blutmondgilde.paper-utils"
+            implementationClass = "de.blutmondgilde.paperutils.PaperUtilsPlugin"
+            displayName = "Paper Utils"
+            description = "Utilities for Paper Plugin development."
+            tags.set(["minecraft", "bukkit", "spigot", "paper", "plugin", "groovy", "gradle"])
+        }
+    }
+}

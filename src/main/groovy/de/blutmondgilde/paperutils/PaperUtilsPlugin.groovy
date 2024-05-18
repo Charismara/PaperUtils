@@ -40,7 +40,9 @@ class PaperUtilsPlugin implements Plugin<Project> {
             // Remove jar files
             pluginDir.listFiles().findAll { it.name.endsWith('.jar') }.each { it.delete() }
             // Download Dependencies
-            downloadDependency(new File("${pluginDir.path}/CommandAPI-${commandApiVersion}.jar"), "https://github.com/JorelAli/CommandAPI/releases/download/${commandApiVersion}/CommandAPI-${commandApiVersion}.jar")
+            project.extensions.paperUtils.runtimePlugins.each { plugin ->
+                downloadDependency(new File("${pluginDir.path}/${plugin.name}.jar"), plugin.downloadUrl)
+            }
         }
 
         project.tasks.register('copyLatestArtifact', Copy) {

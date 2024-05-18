@@ -1,3 +1,5 @@
+package de.blutmondgilde.paperutils
+
 import groovy.json.JsonSlurper
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -42,7 +44,7 @@ class PaperUtilsPlugin implements Plugin<Project> {
         }
 
         project.tasks.register('copyLatestArtifact', Copy) {
-            dependsOn project.named("build")
+            dependsOn project.tasks.named("build")
 
             def testServerDir = project.extensions.paperUtils.testServerDir
             def libsDir = new File("${project.layout.buildDirectory.get()}/libs")

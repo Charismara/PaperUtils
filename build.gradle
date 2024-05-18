@@ -3,17 +3,22 @@ plugins {
     id 'java-gradle-plugin'
 }
 
+apply plugin: "groovy"
+
 group = "de.blutmondgilde"
-version = "0.0.1"
+version = "0.0.2"
 
 gradlePlugin {
+    website = "https://github.com/Charismara/PaperUtils"
+    vcsUrl = "https://github.com/Charismara/PaperUtils"
+
     plugins {
         paperUtils {
             id = "de.blutmondgilde.paper-utils"
             implementationClass = "de.blutmondgilde.paperutils.PaperUtilsPlugin"
             displayName = "Paper Utils"
             description = "Utilities for Paper Plugin development."
-            tags.set(["minecraft", "bukkit", "spigot", "paper", "plugin", "groovy", "gradle"])
+            tags.set(["minecraft", "bukkit", "spigot", "paper", "groovy"])
         }
     }
 }

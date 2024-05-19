@@ -9,11 +9,11 @@ import org.gradle.api.tasks.Copy
 class PaperUtilsPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        project.extensions.add("paperUtils", PaperUtilsPluginExtension)
+        project.extensions.create("paperUtils", PaperUtilsPluginExtension, project.objects)
 
         project.tasks.register("setupTestserver") {
-            def testServerDir = project.extensions.paperUtils.testServerDir
-            def minecraftVersion = project.extensions.paperUtils.minecraftVersion
+            def testServerDir = ((PaperUtilsPluginExtension)project.extensions.paperUtils).testServerDir
+            def minecraftVersion = ((PaperUtilsPluginExtension)project.extensions.paperUtils).minecraftVersion
             // Create TestServer Directory
             testServerDir.mkdirs()
             // Delete potential old Paper Jars
@@ -40,15 +40,15 @@ class PaperUtilsPlugin implements Plugin<Project> {
             // Remove jar files
             pluginDir.listFiles().findAll { it.name.endsWith('.jar') }.each { it.delete() }
             // Download Dependencies
-            project.extensions.paperUtils.runtimePlugins.each { plugin ->
-                downloadDependency(new File("${pluginDir.path}/${plugin.name}.jar"), plugin.downloadUrl)
+            ((PaperUtilsPluginExtension)project.extensions.paperUtils).server.plugins.each { plugin ->
+                downloadDependency(new File("${pluginDir.path}/${plugin.fileName}.jar"), plugin.downloadUrl)
             }
         }
 
         project.tasks.register('copyLatestArtifact', Copy) {
             dependsOn project.tasks.named("build")
 
-            def testServerDir = project.extensions.paperUtils.testServerDir
+            def testServerDir = ((PaperUtilsPluginExtension)project.extensions.paperUtils).testServerDir
             def libsDir = new File("${project.layout.buildDirectory.get()}/libs")
 
             if (!libsDir.exists() || libsDir.listFiles().length == 0) {
@@ -90,7 +90,6 @@ class PaperUtilsPlugin implements Plugin<Project> {
 
         return targetFile
     }
-
 
     static def downloadLatestPaperBuild(targetDir, minecraftVersion) {
         // Get latest Paper Build

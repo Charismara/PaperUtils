@@ -6,7 +6,7 @@ plugins {
 apply plugin: "groovy"
 
 group = "de.blutmondgilde"
-version = "0.0.3"
+version = "0.0.4"
 
 gradlePlugin {
     website = "https://github.com/Charismara/PaperUtils"
